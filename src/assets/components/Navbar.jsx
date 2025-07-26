@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 
 const Navbar = () => {
   return (
@@ -7,9 +9,9 @@ const Navbar = () => {
             JSON-Flix
         </button>
         <ul className='flex gap-5 items-center'>
-            <li className=''>Home</li>
-            <li>About</li>
-            <li>Contact</li>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/contact">Contact</Link>
         </ul>
     </div>
   )

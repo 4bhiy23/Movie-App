@@ -1,8 +1,11 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import "./App.css";
 import Navbar from "./assets/components/Navbar";
 import Card from "./assets/components/Card";
+import Contact from "./pages/Contact";
+import Home from "./pages/Home";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");         // user input
@@ -25,6 +28,8 @@ function App() {
     }
   }
 
+
+  // The functions that displays the searched movie
   const search = async (movieName) => {
     try {
       const response = await fetch(
@@ -39,7 +44,7 @@ function App() {
     }
   }
 
-
+  // Display trending movies
   const fetchTrending = async () => {
     try {
       const response = await fetch(
@@ -52,6 +57,8 @@ function App() {
       console.error("An erro occured", error)
     }
   }
+
+  // Display trending movies on every render
   useEffect(() => {
 
     fetchTrending()
@@ -63,25 +70,19 @@ function App() {
   return (
   <>
     <Navbar />
-    <div className="search flex w-full p-3 justify-center">
-      <input type="text" 
-      className="bg-white rounded-l-full p-1 w-1/3" 
-      onChange={handleChange} 
-      onKeyDown={handleKeypress}
+    <Routes>
+      <Route path="/" element={<Home 
+          handleChange = {handleChange}
+          handleKeypress = {handleKeypress}
+          handleClick = {handleClick}
+          searchResults= {searchResults}
+          />} 
       />
-      <button className="bg-red-500 rounded-r-full p-1" onClick={handleClick}>Search</button>
-    </div>
+      <Route path="/contact" element={<Contact />} />
+    </Routes>
 
-    {/* <Card /> */}
-
-
-
-    <div className="movie-area bg--50 flex flex-wrap justify-around p-1 gap-3.5">
-      {searchResults.map((movie) => (
-        <Card key={movie.id} movie={movie} />
-      ))}
-
-    </div>
+    
+    
   </>
   )
 }
